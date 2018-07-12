@@ -1,0 +1,15 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg $1`
+
+usage $0 number_to_check ${stuff} || exit 1
+
+if [ "$stuff" ] && [[ "$stuff" =~ ^-?[0-9]+$ ]];then
+	#echo $stuff
+	exit 0
+else 
+	#echo false
+	exit 1
+fi
+

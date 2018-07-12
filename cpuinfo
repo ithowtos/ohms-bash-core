@@ -1,0 +1,6 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+lscpu | egrep -i '^(model name|cpu mhz)'
+lscpu | head -5
+

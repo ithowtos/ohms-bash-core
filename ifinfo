@@ -1,0 +1,3 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+ip a | egrep '(^[0-9]*:|inet)' | egrep -v '( lo |127.0| ::1/128|lo:)'

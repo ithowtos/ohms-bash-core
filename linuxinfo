@@ -1,0 +1,32 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+echo --------
+osudo date
+echo --------
+uname -a
+
+echo --------
+grep -v URL /etc/lsb-release
+
+echo --------
+cpuinfo
+echo --------
+ifinfo
+echo --------
+ip route
+echo --------
+grep nameserver /etc/resolv.conf
+echo --------
+
+osudo free -mh
+echo --------
+
+osudo df -h | grep -v tmpfs
+echo --------
+
+cat /proc/mdstat
+echo --------
+
+osudo fdisk -l | grep '/dev' | grep -i disk
+echo --------

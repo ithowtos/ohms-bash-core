@@ -1,0 +1,6 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+supported="ubuntu|xenial|trusty|alpine|centos|PRODUCT_VERSION=\"7\""
+for i in `cat /etc/*release | egrep -io ${supported}`;do echo $i | tolowercase ;done | sort | uniq
+
