@@ -1,0 +1,26 @@
+#!/bin/bash
+# Version - 1.0.0
+
+WHO=`whoami`
+
+fol=
+file=
+if [ "root" = "$WHO" ]; then
+	fol=/usr/local/bin/
+else
+	fol=/home/${WHO}/bin/
+fi
+
+mkdir -p ${fol}
+file=${fol}/getpath
+
+oh=`echo $( find ${optohms} )  | grep -v '/$' | sed 's/ /:/g'`
+echo $oh
+echo '#!/bin/bash' > $file
+echo >> $file
+echo "export PATH=${PATH}:${oh}" >> $file 
+chmod +x $file
+
+echo path is set
+
+cat $file
