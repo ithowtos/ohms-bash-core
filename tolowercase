@@ -1,0 +1,10 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+thing="$@"
+
+if [ -z "$thing" ];then
+	read thing
+fi
+
+echo ${thing} | tr [:upper:] [:lower:]
