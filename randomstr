@@ -1,0 +1,31 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg $1`
+
+usage $0 size_of_string $stuff || exit 1
+
+isinteger $stuff || exit 1
+
+siz=$1
+options="0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+
+function getrandomchar {
+        size=`echo $options | wc -w`
+        choice=$(( ( RANDOM % $size )+1 ))
+        j=0
+
+        for i in $options;do
+                j=$((j+1))
+                if [ "$j" -eq "$choice" ];then
+                        echo -ne $i;
+                fi
+        done
+}
+
+
+#for i in $( echo -ne {1..`echo -ne ${siz}`} ); do
+for (( c=0; c<=$siz; c++ )); do
+	#echo $i
+	getrandomchar 
+done

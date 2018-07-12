@@ -1,0 +1,50 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+#check=`echo "$1" | grep "dict" && echo $2` 
+
+function getrandomword {
+	if [ -z "$options" ]; then
+		echo Exception Error Occured
+		return
+	fi
+	size=`echo $options | wc -w`
+	choice=$(( ( RANDOM % $size )+1 ))
+	j=0
+
+	for i in $options;do 
+		j=$((j+1))
+		if [ "$j" -eq "$choice" ];then 
+			echo $i; 
+		fi
+	done
+}
+
+if [ -z $1 ];then
+	echo $BASENAME $0 [words to pick random one from]
+	echo or
+	echo "$BASENAME $0 dict [integer - number of words from dictionary] [title|upper|lower (default case - lower)]"
+
+	exit 0
+elif [ "$1" = "dict" ] && [[ "$2" =~ ^-?[0-9]+$ ]];then
+	#echo dictionary randoming
+	options=`egrep -v "'" /usr/share/dict/words`
+	no=$2
+	space=''
+	out=''
+	for i in `seq 1 ${no}`;do
+		out="${out}${space}`getrandomword`"
+		space=' '
+	done	
+	if [ "upper" == "$3" ];then
+		echo $out | tr -s [:lower:] [:upper:]
+	elif [ "title" == "$3" ];then
+		totitlecase $out
+	else
+		echo tolowercase $out
+	fi
+else
+	options="$*"
+	getrandomword
+fi
+

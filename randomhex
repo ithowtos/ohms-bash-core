@@ -1,0 +1,50 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+if [ "$1" ] && [ "true" = "`/usr/local/bin/isinteger $1`" ]; then
+	:
+else
+	echo Usage:
+	echo $BASENAME $0 size_of_string
+	exit 0
+fi
+
+siz=$1
+options="0 1 2 3 4 5 6 7 8 9 A B C D E F"
+
+function getrandomchar {
+        size=`echo $options | wc -w`
+        choice=$(( ( RANDOM % $size )+1 ))
+        j=0
+
+        for i in $options;do
+                j=$((j+1))
+                if [ "$j" -eq "$choice" ];then
+                        echo -ne $i;
+                fi
+        done
+}
+
+function randomh {
+
+#for i in $( echo -ne {1..`echo -ne ${siz}`} ); do
+	for (( c=0; c<$siz; c++ )); do
+		#echo $i
+		getrandomchar 
+	done
+}
+
+function max {
+	for (( d=0; d<$siz; d++ )); do
+		echo -ne "F"
+	done
+}
+
+echo Random Hex
+rh=`randomh`
+echo $rh
+max=`max`
+echo max hex
+echo $max
+echo Inverse Hex
+printf %X `echo $(( 0x${max}-0x${rh} ))` && echo
