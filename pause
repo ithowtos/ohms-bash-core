@@ -1,0 +1,39 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+ch=0
+v=0
+c=$1
+
+function p {
+
+c=$1
+
+if [ -z "$c" ] ; then
+	mess=''
+elif [ "-v" = "$c" ] ; then
+	v=1
+	mess="Press any key to continue"
+else
+	c=${c:0:1}
+	mess="Press ${c} to continue"
+fi
+
+if [[ "$ch" -eq "1" ]] ; then 
+	mess=''
+	ch=1
+fi
+
+read -n 1 -s -r -p "${mess}" out && ch=1
+
+if [ -z "${c}" ] || [[ "$v" -eq "1" ]]  ; then
+	exit 0
+elif [ "${c}" = "${out}" ] ; then
+	exit 0
+else 
+	p $c
+fi
+
+}
+
+p $c

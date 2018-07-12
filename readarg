@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
+# Version - 1.0.1 - rc
 
 thing="${@}"
 
@@ -7,4 +7,6 @@ if [ -z "${thing}" ];then
         read -t 1 thing
 fi
 
-printf "${thing}" 
+if [ "${thing}" ];then
+	printf "%q" "${thing}"
+fi
