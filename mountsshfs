@@ -1,0 +1,18 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+# Requires - ssfs
+
+sshfs -V | grep -o version > /dev/null && echo yes || install sshfs -y
+
+osudo groupadd fuse
+osudo usermod -a -G fuse $USER
+
+sshfsex=`sshfs --version | grep "SSHFS version"`
+
+if [ -z "$sshfsex" ];  then
+	echo sshfs needs to be installed
+elif [ -z "$2" ];then
+	echo "Usage $basename $0 [source mount point] [destination mount point]"
+else 
+	sshfs -o allow_other $1 $2
+fi

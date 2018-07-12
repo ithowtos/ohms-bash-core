@@ -1,0 +1,12 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+st=`readarg $1`
+
+tab=`echo -ne '\t'`
+
+if [ "$st" = "$tab" ] ; then printf '9' ; fi
+
+usage $0 char $st || exit 0
+
+printf '%d' "'$st"

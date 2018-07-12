@@ -1,0 +1,10 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+obj=`readarg $1`
+
+usage "$BASENAME $0" 'object-to-kill' $obj || exit 0
+
+echo "killing $obj" && for i in `ps -ef | grep $obj | egrep -v grep | tr -s [:space:] | cut -d' ' -f2` ; do 
+	echo killing - $i && kill $i ; done
+echo .

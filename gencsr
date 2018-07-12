@@ -1,0 +1,10 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+cn="$1" 
+
+usage $0 '[cn]' "${cn}" || exit 1
+
+echo CN - ${cn}
+
+openssl req -new -newkey rsa:4096 -nodes -keyout ${cn}.key -out ${cn}.csr

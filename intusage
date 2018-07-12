@@ -1,0 +1,14 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+st=$3
+
+usage $0 '$0 [usage post script] [integer parameter to check]' $2 || exit 1
+
+function use {
+	usage "$1" "$2" "$st" || exit 1
+}
+
+use $1 $2 $st || exit 1
+st=
+checkinteger $3 || use $1 $2 $st || exit 1

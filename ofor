@@ -1,0 +1,21 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+read -t 1 input
+
+#echo $input
+
+#exit 0
+
+coms="${@}"
+#echo $coms
+
+usage $0 "pipe in interation comm, paramns are commands to apply to iteration" "${coms}" || exit -1
+
+for z in ${input}
+	do
+		#echo $z
+		$( echo ${coms} | sed "s/this/$z/g" )
+	done
+
+#printf "${stuff}"

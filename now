@@ -1,0 +1,4 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+echo -ne `date +%Y%m%d%H%M%S`

@@ -1,0 +1,11 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg "${@}"`
+
+#echo $stuff
+
+if [ -z "$stuff" ] ; then exit 0 ; fi
+
+printf "$stuff" | sed 's/^[\t ]*//g'
+#printf $stuff 

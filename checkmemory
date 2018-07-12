@@ -1,0 +1,18 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+function checkswap {
+	echo `free | tail -1 | tr -s [:space:] | cut -d' ' -f3`
+}
+
+## returns percentage
+function checkcache {
+	echo $(( ( `free | head -2 | tail -1 | tr -s [:space:] |  cut -d' ' -f6`00/`free | head -2 | tail -1 | tr -s [:space:] |  cut -d' ' -f2` ) ))
+}
+
+sw=`checkswap`
+ca=`checkcache`
+
+if [ "0" -lt "$sw" ] || [ "50" -lt "$ca" ]; then
+	echo high
+fi

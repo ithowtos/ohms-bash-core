@@ -1,0 +1,4 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+ip a | egrep ^[0-9]: | egrep -v 'lo|docker' | cut -d: -f2 | removeleadingwhitespace
