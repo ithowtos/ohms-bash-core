@@ -1,10 +1,9 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
+# Version - 1.0.1 - rc
 
 ifnet=`readarg $1`
 usage $0 'if' $ifnet || exit 0
 
 ip a
-#ifnet=`ip a | egrep '^2: ' | cut -d':' -f2 | sed 's/^[\t ]*//g'` && sudo ifdown $ifnet && sudo ifup $ifnet 
-sudo ifdown $ifnet && sudo ifup $ifnet 
+osudo ifdown $ifnet && osudo ifup $ifnet 
 ip a
