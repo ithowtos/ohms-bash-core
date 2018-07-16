@@ -8,5 +8,5 @@ if [ -z "${thing}" ];then
 fi
 
 if [ "${thing}" ];then
-	printf "%q" "${thing}"
+	printf "%b" "${thing}"
 fi
