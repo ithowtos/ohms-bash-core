@@ -1,0 +1,21 @@
+#!/bin/bash
+# Version - 1.0.0 - rc 
+
+p=`readarg $1`
+usage $0 bitmask $p || exit 1
+
+function use {
+	echo bitmask must be between 0 and 32
+	usage
+	exit 1
+}
+
+if [[ "$p" -gt "32" ]] ; then 
+	use
+elif [[ "$p" -lt "0" ]] ; then 
+	use
+fi
+
+
+
+ro=1 && for i in {1..32} ; do t=$((( p-i ))) && if [[ "$t" -ge "0" ]] ; then echo -ne 1 ; else echo -ne 0 ; fi && if [[ "$ro" -eq "8" ]] ; then ro=1 && echo -ne ' ' ; else ro=$((( ro+1 ))) ; fi ; done | ofor bintodecimal this | replacenewline '.'

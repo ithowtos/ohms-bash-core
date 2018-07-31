@@ -1,5 +1,6 @@
 #!/bin/bash
-# Version - 1.0.1 - rc
+# Version - 1.0.2 - rc
+## changed %q to %b in printf line 17
 
 thing="${@}"
 
