@@ -1,0 +1,5 @@
+#!/bin/bash
+# Version - 1.0.0 - rc -->
+
+du --max-depth 0 -h * | sed "s/\t/,/g" | egrep "[M|G],"
+
