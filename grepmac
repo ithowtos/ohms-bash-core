@@ -1,0 +1,15 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+function grepmacfn {
+	echo $1 | egrep -o "([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})(:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})" | egrep -v "00:00:00:00:00:00|ff:ff:ff:ff:ff:ff"
+}
+
+thing="$@"
+
+if [ -z "$@" ];then
+	while IFS= read -r line; do
+		grepmacfn "$line"
+	done
+fi
+
