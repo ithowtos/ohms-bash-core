@@ -1,0 +1,13 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+function iptmasq {
+	osudo iptables -t nat -A POSTROUTING -j MASQUERADE
+}
+
+function checkmasq {
+	osudo iptables -t nat -vnL --line-numbers | grep -i masquerade | trimspace | grep -o '0.0.0.0/0 0.0.0.0/0'
+}
+
+osudo addipforward > /dev/null
+checkmasq || iptmasq > /dev/null

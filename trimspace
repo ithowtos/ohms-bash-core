@@ -1,0 +1,7 @@
+#!/bin/bash
+# Version - 1.0.0 - rc 
+
+read -t 1 stuff
+
+printf %b "${stuff}" | tr -s [:space:]
+

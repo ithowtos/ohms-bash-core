@@ -1,0 +1,17 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg $1`
+
+function use {
+	usage $0 decimal_integer $st || exit 0
+}
+
+function convert {
+	echo "obase=16;ibase=10;${stuff}" | bc
+}
+
+st=$stuff && use || exit 1
+st=
+checkinteger $stuff || use || exit 0
+convert

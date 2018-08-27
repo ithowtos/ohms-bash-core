@@ -1,12 +1,19 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
+# Version - 1.0.1 - rc
 
 stuff=`readarg $1`
-usage $0 'b/x.x.x.x/yy b - virt if number x - ip address, y - netmask' $stuff || exit 0
+usage $0 'b/x.x.x.x/yy/ifid b - virt if number x - ip address, y - netmask' $stuff || exit 0
 
 
 b=`echo $stuff | cut -d'/' -f1`
 if=`echo $stuff | cut -d'/' -f2`
 nm=`echo $stuff | cut -d'/' -f3 | bitmask2netmask`
+ifid=`echo $stuff | cut -d'/' -f4`
 
-osudo ifconfig `getnic`:$b ${if} netmask $nm
+echo ifid - $ifid
+
+if [ -z "$ifid" ]; then
+	ifid=`getnic`
+fi
+
+osudo ifconfig $ifid:$b ${if} netmask $nm

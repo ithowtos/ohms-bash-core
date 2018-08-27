@@ -1,0 +1,29 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+ipfloc=/proc/sys/net/ipv4/ip_forward
+sysipfstr='net.ipv4.ip_forward=1'
+pemfile=/etc/sysctl.conf
+
+who=`whoami | grep root `
+
+usage $0 'must be root or sudo up' $who || exit 1
+
+function cattoproc {
+	echo -ne 1 > $ipfloc	
+}
+
+function checkcatproc {
+	grep 1 $ipfloc | grep 1 
+}
+
+function checkperm {
+	egrep "^$sysipfstr" $pemfile
+}
+
+function makeperm {
+	sed -i "s/#${sysipfstr}/${sysipfstr}/g" $pemfile
+}
+
+checkcatproc || cattoproc
+checkperm || makeperm
+
