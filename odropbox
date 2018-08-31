@@ -1,0 +1,23 @@
+#!/bin/bash
+# Dropbox Wrapper
+# Version - 1.0.0 - rc
+
+function all {
+	dropbox status || install https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
+}
+
+function restart {
+	dropbox stop
+       dropbox start
+}
+
+all 
+
+if [ "restart" = "$1" ] ; then 
+	restart
+else 
+	dropbox "${*}"
+fi
+
+dropbox status
+

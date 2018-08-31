@@ -1,0 +1,24 @@
+#!/bin/bash
+# Script to regex pattern check strings
+# Version - 1.0.0 - rc
+
+function use {
+	usage $0 '[regex] [string_to_check]' $stuff || exit 1
+}
+
+function check {
+	if [ "$stuff" ] && [[ "$stuff" =~ ${regex} ]];then
+		:
+	else
+		echo patten does not regex match string: $stuff
+		exit 1
+	fi
+
+}
+
+regex=$1
+stuff=$2
+
+use
+check
+

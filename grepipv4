@@ -1,0 +1,7 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+read -d£ -t 2 thing
+
+printf "%b" "${thing}" | \
+	grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'	

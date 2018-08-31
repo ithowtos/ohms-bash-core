@@ -4,7 +4,17 @@
 file="$1"
 comm="${@:2}"
 
-usage $0 'file [commands for each line]' "${comm}" || exit -1
+function use {
+	usage $0 'file [commands for each line]' "${comm}" || exit -1
+}
+
+
+if [ ! -f "$file" ]; then
+    echo "File not found"
+    comm=''
+fi
+    
+use
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
 	$( echo ${comm} | sed "s/this/$line/g" )

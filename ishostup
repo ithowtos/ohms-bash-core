@@ -1,0 +1,17 @@
+#!/bin/bash
+# Checks if a host is up
+# Version - 1.0.0 - rc 
+
+host=`readarg "$1"`
+
+usage $BASENAME $0 host $host
+
+if [ "$host" ]; then
+	
+	exco=1
+	nmap -sP ${host}/32 | grep 'host up' >/dev/null && exco=0 && echo up || echo down
+
+	exit $exco
+
+fi
+
