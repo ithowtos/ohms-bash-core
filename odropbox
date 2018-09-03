@@ -3,7 +3,7 @@
 # Version - 1.0.0 - rc
 
 function all {
-	dropbox status || install https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
+	dropbox status > /dev/null || install https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
 }
 
 function restart {
@@ -15,9 +15,12 @@ all
 
 if [ "restart" = "$1" ] ; then 
 	restart
+elif [ "status" = "$1" ] ;then
+	echo The Dropbox status is...
+	dropbox status
 else 
 	dropbox "${*}"
 fi
 
-dropbox status
+#dropbox status
 

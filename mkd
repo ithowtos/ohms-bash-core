@@ -1,0 +1,8 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg $1`
+
+usage $0 '[folder to make]'  "${stuff}" 'Program to make a folder and all necesary parent folders,\nhowever will first check to see if the folder exists,\nif it does it will do nothing and leave the folder as is.' || exit 1
+
+ls -d $stuff || mkdir -p $stuff

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version - 1.0.0
+# Version - 1.0.0 - rc
 
 /usr/local/bin/getpath
 
@@ -9,7 +9,7 @@ par=$3
 #echo - 3 - $par
 usage=$2
 #echo - 2 - $usage
-#extra=$4
+extra=$4
 
 if [ -z "$usage" ]; then 
 	echo Usage of usage:
@@ -19,8 +19,9 @@ fi
 
 
 if [ -z "$par" ];then
+	printf "${extra}"  && printf '\n\n'
 	echo Usage:
-	echo "${bas} ${usage} $extra"
+	echo "${bas} ${usage}"
 	exit 1
 else
 	exit 0
