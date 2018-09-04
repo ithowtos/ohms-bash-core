@@ -1,0 +1,14 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+progDesc='Start a command and turn into a daemon in a screen and detach'
+
+usage $0 'title command' "${2}" "${progDesc}" || exit 1
+
+comm="${@:2}"
+title=$1
+
+echo comm - $comm
+echo title - $title
+
+screen -dS "${title}" -m bash -c ${comm}

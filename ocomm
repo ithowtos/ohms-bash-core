@@ -1,0 +1,12 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg $*`
+pd='Start a command in a screen and detach and leave running.\nNote if the command exits quickly, then so will the screen.\nIf the program keeps open on the current terminal,\nthen it will keep on the current screen.\nIf you need a command that finishes quickly to keep running after it has finished,\nthen you need to create a continous daemon on that command then use the command - od'
+
+usage $0 'command to send to screen' "${stuff}" "${pd}"  || exit 1
+
+first=`echo "${stuff}" | cut -d' ' -f1`
+
+scrcomm $first "${stuff}"
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+pd='Program to daemonise the program passed in,\nand place the daemon into a screen, then detach,\nand use the the first word of the command as the screen title.'
+
+stuff=`readarg "${*}"`
+
+usage $0 'command to daemon' "$stuff" "${pd}" || exit 1
+
+echo $stuff
+stu=($stuff)
+
+tit="${stu[0]}"
+
+comm="while true ; do ${stuff} ; done "
+echo title - $tit
+echo command - "${comm}"
+
+screen -dS "${tit}" -m bash -c "${comm}"
+#scrcomm "${tit}" "'${comm}'" - having issues passing a while loop here so replicated the scrcomm in the line above
+
