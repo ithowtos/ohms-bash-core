@@ -11,4 +11,4 @@ title=$1
 echo comm - $comm
 echo title - $title
 
-screen -dS "${title}" -m bash -c ${comm}
+screen -dS "${title}" -m ${comm}
