@@ -1,0 +1,12 @@
+#!/bin/bash
+# Version - 1.0.0 - rc 
+
+fol=`readarg "${1}"`
+
+usage $0 'folder-to-reset' $fol || exit 1
+
+cd "${fol}"
+git fetch origin
+git reset --hard origin/master
+chmod -R +x *
+
