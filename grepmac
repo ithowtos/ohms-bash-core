@@ -1,15 +1,22 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
+# Version - 1.0.1 - rc
+
+export exco=1
 
 function grepmacfn {
-	echo $1 | egrep -o "([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})(:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})" | egrep -v "00:00:00:00:00:00|ff:ff:ff:ff:ff:ff"
+	echo $1 | egrep -o "([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})(:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})([:|-])([0-9|a-f|A-F]{2})" | egrep -v "00:00:00:00:00:00|ff:ff:ff:ff:ff:ff" && export exco=0
 }
 
-thing="$@"
+thing="${*}"
 
-if [ -z "$@" ];then
+
+if [ -z "${thing}" ];then
 	while IFS= read -r line; do
 		grepmacfn "$line"
 	done
+else
+	grepmacfn "$thing"
 fi
+
+exit $exco
 

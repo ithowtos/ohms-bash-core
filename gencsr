@@ -2,9 +2,13 @@
 # Version - 1.0.0 - rc
 
 cn="$1" 
+ks="$2"
 
-usage $0 '[cn]' "${cn}" || exit 1
+pd='Program to generate a certificate key, and certificate signing request'
 
-echo CN - ${cn}
+usage $0 '[cn] [keysize - default 4096]' "${cn}" "${pd}" || exit 1
 
-openssl req -new -newkey rsa:4096 -nodes -keyout ${cn}.key -out ${cn}.csr
+echo Generating certificate - CN - ${cn} ...
+
+openssl req -new -newkey rsa:${ks} -nodes -keyout ${cn}.key -out ${cn}.csr
+
