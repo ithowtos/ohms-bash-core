@@ -1,0 +1,7 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+echo "nmap ${*}"
+nmap -v || install nmap -y
+nmap ${*}
+

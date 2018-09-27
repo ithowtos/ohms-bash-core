@@ -1,0 +1,17 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+source=$1
+mountpoint=$2
+
+usage $0 'source mount_point' $mountpoint || exit 1
+
+sc=$source
+mp=$mountpoint
+
+function mntftp {
+	ohmsin curlftpfs $sc $mp
+}
+
+echo $sc | grep -o ftp && mntftp $sc $mp
+
