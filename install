@@ -4,8 +4,11 @@
 /usr/local/bin/getpath
 
 os=`cat /etc/*release | egrep -io "centos|ubuntu|alpine" | tolowercase`
+
+
 echo $os
-#exit 0
+
+function process {
 if [ -z "$1" ];then
 	prog=`echo $BASENAME $0`
 	usage ${prog} '[package(s) to install or upgrade to upgrade whole bot]' "$1" 
@@ -60,3 +63,9 @@ elif [ "centos" = "$os" ];then
 else
 	echo Unknown OS - $os
 fi
+}
+
+
+stuff=`readarg "${*}"`
+
+process ${stuff}

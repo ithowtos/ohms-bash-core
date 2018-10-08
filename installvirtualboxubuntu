@@ -1,0 +1,35 @@
+#!/bin/bash
+# Version - 1.0.0 - ohms-bash-until-ubuntu - rc
+
+verbose=`echo "${*}" | grep -o "\-v"`
+
+#echo $verbose
+
+function vecho {
+	if [ "$verbose" ] ; then 
+		echo "${*}"
+	fi
+}
+
+
+function addrepokey {
+	wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+	wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+}
+
+function installVBox {
+	addrepokey
+	install update
+	install virtualbox -y
+}
+
+vecho Installing VirtualBox
+
+vecho Updating repo
+
+addrepokey
+
+vecho Updating and Installing
+
+installVBox
+
