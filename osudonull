@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# A command to simply invoke sudo so the password will be entered and cached. All proceeding commands for the sudo timeout period will not need password
+# Put this command at the top of a script to avoid sudo password request suprises later on.
+#
+# Version - 1.0.0 - rc - core
+osudo echo -ne
+

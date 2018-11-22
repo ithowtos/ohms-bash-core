@@ -8,7 +8,7 @@ function all {
 
 function restart {
 	dropbox stop
-       dropbox start
+       	dropbox start
 }
 
 all 

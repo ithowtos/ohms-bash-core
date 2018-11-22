@@ -1,0 +1,22 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+stuff=`readarg ${*}` || stuff=''
+
+usage $0 'command [stuff to split on a per character level]' "$stuff" 'If the first parameter is a valid command it shall be applied to each character' || exit 1
+
+function splitchars {
+	echo ${stuff} | sed -e 's/\(.\)/\1 /g' 
+}
+
+comm=`command -v $1`
+
+
+if [ "$comm" ] ; then 
+	stuff=`echo $stuff | cut -d' ' -f2-`
+	for i in `splitchars` ; do 
+		$comm $i && echo -ne ' '  ; done
+else 
+	splitchars
+fi
+

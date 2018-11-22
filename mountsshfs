@@ -1,18 +1,40 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
-# Requires - ssfs
+# Requires - sshfs
 
-sshfs -V | grep -o version > /dev/null && echo yes || install sshfs -y
+#sshfs -V | grep -o version > /dev/null && echo yes || install sshfs -y
 
 osudo groupadd fuse
 osudo usermod -a -G fuse $USER
 
-sshfsex=`sshfs --version | grep "SSHFS version"`
+function sshfsf {
+	mkdir -p $dest
+	sshfs -o allow_other $src $dest
+}
+
+
+sshfsex="`command -v sshfs`"
 
 if [ -z "$sshfsex" ];  then
 	echo sshfs needs to be installed
-elif [ -z "$2" ];then
-	echo "Usage $basename $0 [source mount point] [destination mount point]"
-else 
-	sshfs -o allow_other $1 $2
+	exit -1
 fi
+
+src=$1
+dest=$2
+
+if [ -z "$dest" ] ; then
+	fin=`echo $src | cut -d':' -f1 `
+	echo fin - $fin 
+
+	dest="/home/${USER}/Drives/omnt/${fin}"
+fi
+
+echo $src - $dest
+
+usage $0 'source destination' "${dest}" 'Tool to mount via sshfs the remote source onto the local destination folder' || exit -1
+
+sshfsf
+
+#echo beep
+

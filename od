@@ -5,9 +5,11 @@ pd='Program to daemonise the program passed in,\nand place the daemon into a scr
 
 stuff=`readarg "${*}"`
 
-usage $0 'command to daemon' "$stuff" "${pd}" || exit 1
+usage $0 'command to daemon' "`command -v ${stuff}`" "${pd}" || exit 1
 
+bf='command not found'
 echo $stuff
+
 stu=($stuff)
 
 tit="${stu[0]}"

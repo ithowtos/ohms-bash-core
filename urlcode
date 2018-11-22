@@ -5,14 +5,18 @@ pd='Program to encode or decode the string'
 
 fn=''
 string=''
+regchk="(en|de)"
 
 function use {
 	echo $1
 	usage $0 'en|de string' "$string" "$pd" || exit 1
 }
 
-fn=`regexcheck "(en|de)" "${1}" && echo "$1" || use 'please state en or de for encode or decode'`
+#echo -- $1 --
+fn=`regexcheck ${regchk} "${1}" && echo "$1" || use 'please state en or de for encode or decode'`
 string="${@:2}"
+
+fn=`echo $fn | cut -d' ' -f1`
 
 use ''
 
@@ -37,5 +41,8 @@ function urldecode {
     printf '%b' "${url_encoded//%/\\x}"
 }
 
-"url${fn}code" "${string}"
+comm="url${fn}code"
+#echo c- $comm
+
+$comm "${string}"
 

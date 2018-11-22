@@ -8,7 +8,8 @@ function use {
 
 function check {
 	if [ "$stuff" ] && [[ "$stuff" =~ ${regex} ]];then
-		return $stuff
+		echo $stuff
+		#return $stuff
 	else
 		echo patten does not regex match string: $stuff
 		exit 1
