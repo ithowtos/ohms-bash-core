@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function _process {
+	ocommand virsh || exit 1
+	olog KVMs…
+	virsh list --all
+	olog root KVMs…
+	osudo virsh list --all
+	getrunningkvmhostsnetinfo
+}
+
+_process
+
