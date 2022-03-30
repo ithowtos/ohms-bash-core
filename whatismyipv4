@@ -1,0 +1,3 @@
+#!/bin/bash
+
+wget -O - http://ipv4.wtfismyip.com/text 2>/dev/null

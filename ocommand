@@ -1,0 +1,12 @@
+#!/bin/bash
+# command -v prog
+
+prog=$1
+usage $0 'program' "$prog" || exit 1
+
+function _process {
+	command -v $prog > /dev/null || exit 1
+}
+
+_process
+

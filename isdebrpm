@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function _process {
+	ismac && echo mac && exit 0
+	v=`showlinuxflavour`
+	echo $v | egrep -oi "ubuntu|debian" > /dev/null && \
+		echo deb  && exit 0 || \
+		echo $v | egrep -oi "redhat|centos|rocky" > /dev/null && \
+		echo rpm && exit 0 || \
+		errexit "$0 unknown - $v" || exit 1
+}
+
+_process
+

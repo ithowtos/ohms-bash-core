@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function _process {
+	#c=$((( `getcols`/5 )))
+	c=`getcols`
+	dt='_'
+	for ((i=0; i<$c; i++)) ; do 
+		out=$out$dt
+	done
+	olog "$out"
+}
+
+_process
+

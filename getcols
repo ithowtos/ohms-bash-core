@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	tput cols
+}
+
+_process
+

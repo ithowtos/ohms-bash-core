@@ -1,0 +1,25 @@
+#!/bin/bash
+
+comm=`readarg $1`
+
+usage $0 'command parameters' "$comm" 'Will run the command, if the command does not exist it shall install it first' || exit 1
+
+function _inst {
+	olog $0 ${FUNCNAME[*]} "installing $comm"
+	install $comm -y || errexit "$0 unable to install - $comm" || exit 1
+}
+
+function oe {
+	olog $0 ${FUNCNAME[*]}
+	ocommand $comm || _inst &&\
+	olog $0 ${FUNCNAME[*]} apparently installed &&\
+	`command -v $comm` "${params}" || errexit "$0 unable ${_FUNCNAME}" ||exit 1
+}
+
+params=
+
+[ "${2}" ] && params="${@:2}" 
+
+olog $0 - $comm - $params
+oe || exit 1
+

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+stuff=`readarg "${@}"`
+
+function _end {
+	echo -ne ''
+	exit 0
+}
+
+function _olog {
+	[ "$verbose" ] || _end
+	v=$( tolowercase $verbose )
+	t=true
+	[ "$v" = "$t" ] && printf "%b" "${@}\n" || _end
+}
+
+_olog "${stuff}"
+

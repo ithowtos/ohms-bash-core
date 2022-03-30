@@ -1,0 +1,8 @@
+#!/bin/bash
+
+usage $0 'install-script' "$1" 'Install script checker' || errexit 'No install script provided' || exit 1
+
+usage $1 '[package(s) to install or upgrade to upgrade whole bot]' "$2" 'Installs packages'  
+usage $1 'search [packages to search]' "$2" || errexit 'No input given' || exit 1
+
+

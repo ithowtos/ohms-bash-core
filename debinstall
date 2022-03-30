@@ -1,0 +1,73 @@
+#!/bin/bash
+
+inst=install
+
+${inst}check $0 $1 || exit 1
+
+function _packinst {
+	osudo apt ${inst} "$@"
+}
+
+function _process {
+	:
+	deb=deb
+	os=`showlinuxflavour`
+	update=update
+	upgrade=upgrade
+	debub=`isdebrpm | grep $deb` || errexit "$0 - Only works $deb based Linux" || exit 1
+	olog $0
+	#### Update ####
+	if [ ${debub} ] && [ "${update}" = "$1" ]; then
+		olog $os $deb $update
+		osudo apt $update -y
+	#### Upgrade - updates, upgrades, dist-upgrade, and autoremove ####
+	elif [ ${debub} ] && [ "${upgrade}" = "$1" ]; then
+		olog $os $deb $upgrade
+		${inst} $update -y && osudo apt $upgrade -y && osudo apt dist-$upgrade -y && ${inst} autoremove -y
+	#### Apt ${inst} -f (${inst}s dependencies) ####
+	elif [ ${debub} ] && [ "-f" = "$1" ]; then
+		olog $os $deb ${inst} -f
+		osudo apt ${inst} -f 
+	#### Removing a package (un${inst}ing) ####
+	elif [ ${debub} ] && [ "remove" = "$1" ]; then
+		olog removing "${@:2}"
+		osudo apt remove "${@:2}" 
+	#### Autoremove ####
+	elif [ ${debub} ] && [ "autoremove" = "$1" ]; then
+		olog autoremoving excess stuff
+		osudo apt autoremove $2	
+	#### Apt Search ####
+	elif [ ${debub} ] && [ "search" = "$1" ]; then
+		olog "$os - search the $deb repos configured for - ${@:2}"
+		apt-cache search "${@:2}"
+	#### Install via Link ####
+	elif [ ${debub} ] && [[ `echo $1 | grep "deb" | egrep "(http|ftp)"` ]]; then
+		olog $os $deb link package ${inst} - $1
+		linkpackage${inst} "$1"
+	#### Install local package ####
+	elif [ ${debub} ] && [[ `echo $1 | grep "deb"` ]]; then
+		olog "$os $deb direct local package dpkg ${inst}"
+		osudo dpkg -i "$1"
+	#### Add Repository ####
+	elif [ ${debub} ] && [[ $1 =~ ^ppa* ]] ; then
+		olog $os $debub repo sources add
+		osudo add-apt-repository "$1" && ${inst} update && ${inst} "${@:2}"
+	##### Specifics ####
+	elif [ ${debub} ] && [ "$1" = "notify-send" ]; then 
+		olog "$os $debub - ${inst}ing notify-send (libnotify-bin)"
+		${inst} libnotify-bin -y && exit 0 || exit 1
+	##### Catch all ${inst} specific package #####
+	elif [ ${debub} ]; then
+		olog $os $debub repo package ${inst}ing -  $1 &&\
+		_packinst "${@}" && exit 0 ||\
+		_packinst "${@}" 2>&1 | grep -qo 'Try "snap install' &&\
+			snap${inst} "${@}" || exit 1
+	##### Fail if unknown ####
+	else 
+		errexit "$0 - $os - unknown action - ${*}" || exit 1
+	fi
+
+}
+
+_process ${*} || exit 1
+

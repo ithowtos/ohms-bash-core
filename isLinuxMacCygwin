@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function _process {
+	chk=`uname -a`
+	echo $chk | grep -qio darwin && echo mac && return || \
+	echo $chk | grep -qio cygwin && echo cygwin && return || \
+	echo linux 
+}
+
+_process
+
