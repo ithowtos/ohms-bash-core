@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function _process {
+	installlsof || exit 1
+	olog Main lsof filter
+	osudo lsof -i -P -n | grep LISTEN | tr -s [:space:] | cut -d' ' -f1,9 | sort -u
+}
+
+_process
+

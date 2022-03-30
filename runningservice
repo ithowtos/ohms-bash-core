@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function _process {
+	command -v service || exit 1
+	olog Running Service Services
+	service --status-all
+}
+
+_process
+

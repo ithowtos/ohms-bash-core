@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function _ips {
+	getnet
+}
+
+function _process {
+	_ips | grepipv4 | egrep -v '(^127.|.255$)'
+}
+
+_process
+

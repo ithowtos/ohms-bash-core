@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function _process {
+	command -v systemctl || exit 1 
+	olog Running SystemCtl Services
+	systemctl | grep running | tr -s [:space:] 
+}
+
+_process
+

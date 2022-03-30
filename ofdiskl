@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	osudo fdisk -l | grep '/dev' | egrep -iv 'disk|loop'
+}
+
+_process
+
