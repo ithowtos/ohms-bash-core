@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sep=$1
+[ -z "$sep" ] && sep=,
+
+function _process {
+	 mount | egrep '/dev/(m|[s-w]d)|:' | cut -d' ' -f1,3,5 | tr ' ' ','
+}
+
+_process
+

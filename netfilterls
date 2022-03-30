@@ -1,0 +1,13 @@
+#!/bin/bash
+
+function _process {
+	ocommand iptables || exit 1
+	olog "$0 #### iptables ls ####"
+	osudo iptables -vnL --line-numbers &&\
+	screenline
+	olog "$0 #### iptables nat ls ####"
+	osudo iptables -t nat -vnL --line-numbers || exit 1
+}
+
+_process || exit 1
+

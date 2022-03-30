@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	getnet | egrep -B 2 "`getips | tr '\n' '|' | sed 's/|$//g'`" |  getnet | egrep -B 2 "`getips | tr '\n' '|' | sed 's/|$//g'`" | sed 's|^[\t ]*||g' | cut -d' ' -f2 | tr '\n' '|' | sed 's/|--|/\n/g' | sed 's/|$//g' && echo
+}
+
+_process
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function _process {
+	whatgives && screenline
+	runningsystemctl && screenline
+	runningservice
+}
+
+_process
+

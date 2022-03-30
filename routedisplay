@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	ip route | egrep -v '^169' | sed  's/proto //g' | sed 's/kernel //g' | sed 's/scope //g' | sed 's/link //g' | sed 's/default via/→/g'
+}
+
+_process
+
