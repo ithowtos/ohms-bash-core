@@ -5,9 +5,11 @@
 thing="${@}"
 
 if [ -z "${thing}" ];then
-        read -t 1 thing
+        read -st 1 thing
 fi
+
 
 if [ "${thing}" ];then
 	printf "%b" "${thing}"
 fi
+

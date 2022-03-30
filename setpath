@@ -1,5 +1,5 @@
 #!/bin/bash
-# Version - 1.0.1 - rc
+# Version - 1.0.2 - rc
 
 WHO=`whoami`
 
@@ -14,11 +14,12 @@ fi
 mkdir -p ${fol}
 file=${fol}/getpath
 
-oh=`echo $( find ${optohms} )  | grep -v '/$' | sed 's/ /:/g'`
-echo $oh
+	#oh=`echo $( find ${optohms} )  | grep -v '/$' | sed 's/ /:/g'`
+	#echo $oh
 echo '#!/bin/bash' > $file
 echo >> $file
-echo "export PATH=${PATH}:${oh}" >> $file 
+	#echo "export PATH=${PATH}:${oh}" >> $file 
+echo "export PATH=${PATH}" >> $file 
 chmod +x $file
 
 echo path is set

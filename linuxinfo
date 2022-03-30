@@ -1,32 +1,62 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-echo --------
-osudo date
-echo --------
-uname -a
+[ "-h" = "$1" ] && h=h || h=
 
-echo --------
-grep -v URL /etc/lsb-release
+osudonull
+[ "$h" = "h" ] && t=t || t=''
 
-echo --------
-cpuinfo
-echo --------
-ifinfo
-echo --------
-ip route
-echo --------
-grep nameserver /etc/resolv.conf
-echo --------
+printf "`[ "$h" = "h" ] && echo -ne h1. ||  echo -ne '###'` Linux Info\n"
 
-osudo free -mh
-echo --------
+function _dis {
+	#echo '<pre>'
+	if [ "$h" = "h" ] ; then
+		echo -ne '<pre style="max-width:640px;">'
+		printf "%b" "${*}"
+		echo -ne '</pre>'
+	else 	
+		printf "%b" "${*}\n"
+	fi
+	#echo '</pre>'
+}
 
-osudo df -h | grep -v tmpfs
-echo --------
+function _title {
+	if [ "$h" = "h" ] ; then 
+		echo " " 
+		echo "h2. ${*}"
+		echo " "
+	else 
+		screenline
+		echo "## ${*}"
+	fi
+}
 
-cat /proc/mdstat
-echo --------
 
-osudo fdisk -l | grep '/dev' | grep -i disk
-echo --------
+_title Base
+${t}baseinfo
+_title U Name
+_dis `uname -a`
+_title CPU Info
+${t}cpuinfo
+_title NIC 
+getnetinfo
+_title Routing
+${t}routedisplay
+_title DNS Namesevers
+_dis `grep nameserver /etc/resolv.conf`
+_title Netfilter Listing
+netfilterls
+_title Memory RAM
+${t}showmem
+_title Mounted
+${t}mounted
+_title RAIDs
+_dis "`cat /proc/mdstat`"
+_title F Disk
+_dis "`tofdiskl`"
+_title Running Services
+runningservices
+_title Running VMs and Containers
+dockvmls || echo none
+echo 
+#screenline

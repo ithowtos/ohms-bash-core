@@ -1,10 +1,11 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-prog="$@"
+prog="$*"
 
 usage $0 sudo_comm $prog || exit 1
 
 sudo=sudo
 
 `command -v $sudo` $prog
+

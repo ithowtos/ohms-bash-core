@@ -1,14 +1,11 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-/usr/local/bin/getpath
+#/usr/local/bin/getpath
 
 bas=$1
-#echo - 1 - $bas
 par=$3
-#echo - 3 - $par
 usage=$2
-#echo - 2 - $usage
 extra=$4
 
 if [ -z "$usage" ]; then 
@@ -19,7 +16,7 @@ fi
 
 
 if [ -z "$par" ];then
-	printf "${extra}"  && printf '\n\n'
+	[ "$extra" ] && printf "${extra}\n\n" 
 	echo Usage:
 	echo "${bas} ${usage}"
 	exit 1

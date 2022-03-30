@@ -7,7 +7,8 @@ if [ -z "$checksupport" ] ; then echo only supported on $supported && exit 0 ; f
 sudo dpkg --add-architecture i386
 sudo apt-add-repository 'https://dl.winehq.org/wine-builds/ubuntu/'
 #sudo add-apt-repository ppa:ricotz/unstable
-wget https://dl.winehq.org/wine-builds/Release.key && sudo apt-key add Release.key
+wget https://dl.winehq.org/wine-builds/Release.key | sudo apt-key add - 
+wget https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
 #sudo add-apt-repository ppa:ubuntu-wine/ppa
 install upgrade
 #install winehq-stable

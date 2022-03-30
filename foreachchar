@@ -11,11 +11,11 @@ function splitchars {
 
 comm=`command -v $1`
 
-
 if [ "$comm" ] ; then 
 	stuff=`echo $stuff | cut -d' ' -f2-`
 	for i in `splitchars` ; do 
-		$comm $i && echo -ne ' '  ; done
+		$comm $i && echo -ne ' '  
+	done
 else 
 	splitchars
 fi

@@ -1,27 +1,8 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
 
-# Update
-install update
-##
-# Install dependencies
-install apt-transport-https ca-certificates curl software-properties-common -y
-##
-# Add GPG Key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
-# Add cert
-osudo apt-key fingerprint 0EBFCD88
+function _process {
+	installdockerubuntubionic
+}
 
-# Add repo
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-
-# Update
-install update
-# Make sure you are about to install from docker repo not Ubuntu
-apt-cache policy docker-ce | grep 'download.docker.com' && install docker-ce -y
-
-command -v docker && echo docker installed || echo docker not installed
+_process
 

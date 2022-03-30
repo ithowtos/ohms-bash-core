@@ -3,15 +3,14 @@
 # Version - 1.0.0 - rc
 
 function use {
-	usage $0 '[regex] [string_to_check]' $stuff || exit 1
+	desc='regex checks the string, and will output the string if complies. Exits 1 if not.'
+	usage $0 "regex string_to_check" "${stuff}" "${desc}" || errexit "Bad input" || exit 1
 }
 
 function check {
-	if [ "$stuff" ] && [[ "$stuff" =~ ${regex} ]];then
-		echo $stuff
-		#return $stuff
+	if [ "$stuff" ] && [[ $stuff =~ ${regex} ]];then
+		olog $stuff
 	else
-		echo patten does not regex match string: $stuff
 		exit 1
 	fi
 

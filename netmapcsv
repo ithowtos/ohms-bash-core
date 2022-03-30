@@ -7,5 +7,5 @@ usage $0 '[network address/network mask prefix]' "${netw}" 'Please note - MAC ad
 
 dat=`date +%Y%m%d%H%M%S` 
 
-onmap -sP ${netw} | egrep -v 'Host is up' | sed ':a;N;$!ba;s/\nMAC Address: /,/g' | egrep -v 'Starting ' | egrep -v 'Nmap done: ' | sed 's/Nmap scan report for //g' | sed 's/ (/,"(/g' | sed 's/)$/)"/g' | sed "s/\$/,${dat}/"
+onmap -sn ${netw} | egrep -v 'Host is up' | sed ':a;N;$!ba;s/\nMAC Address: /,/g' | egrep -v 'Starting ' | egrep -v 'Nmap done: ' | sed 's/Nmap scan report for //g' | sed 's/ (/,"(/g' | sed 's/)$/)"/g' | sed "s/\$/,${dat}/"
 

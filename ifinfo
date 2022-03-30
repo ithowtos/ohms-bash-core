@@ -1,3 +1,29 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
-ip a | egrep '(^[0-9]*:|inet)' | egrep -v '( lo |127.0| ::1/128|lo:)'
+#ou=`
+sep=$1 
+[ -z "$sep" ] && sep=','
+
+ou=`ip a | egrep -A 4 '^[0-9]*:' | egrep -v '( lo |127.0| ::1/128|lo:|valid|loopback)'`
+
+function _doo {
+	echo $* | removeleadingwhitespace | cut -d' ' -f2
+}
+
+function _do {	
+	: 
+	echo "$1 "
+	old=
+	for i in {1..3} ; do 
+		t=$( _doo `printf "%b" "$ou" | grep -A $i $1 | tail -1` )
+		[ "$old" = "$t" ] && continue
+		old=$t 
+		echo $t
+	done
+	
+}
+
+olog "IF:${sep}MAC${sep}IPv4${sep}IPv6"
+for i in `printf "%b" "$ou" | egrep '^[0-9]*:' | cut -d' ' -f2 | replacenewline ` ; do 
+	echo `_do $i ` | sed "s/ /${sep}/g"
+done

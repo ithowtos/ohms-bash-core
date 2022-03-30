@@ -5,6 +5,10 @@ obj=`readarg $1`
 
 usage "$BASENAME $0" 'object-to-kill' $obj || exit 0
 
-echo "killing $obj" && for i in `ps -ef | grep $obj | egrep -v grep | tr -s [:space:] | cut -d' ' -f2` ; do 
-	echo killing - $i && kill $i ; done
-echo .
+#ismac && macohmskill $1
+
+olog $0 "killing $obj" && for i in `ps -ef | grep -i $obj | grep -v grep | grep -v $0 |  sed 's|^[\t ]*||g' | tr -s [:space:] | cut -d' ' -f2` ; do 
+	olog $0 "killing - $i " && kill " $i" && olog $0 🗸 
+done
+olog $0 Done 🗸
+

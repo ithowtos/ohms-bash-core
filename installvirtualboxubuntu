@@ -5,6 +5,8 @@ verbose=`echo "${*}" | grep -o "\-v"`
 
 #echo $verbose
 
+whatlinuxflavour | egrep -o '(bionic|focal)' || errexit "$0 Supported only on bionic and focal" || exit 1
+
 function vecho {
 	if [ "$verbose" ] ; then 
 		echo "${*}"
@@ -17,17 +19,32 @@ function addrepokey {
 	wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 }
 
+function addrepo {
+	sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian bionic contrib"
+}
+
 function installVBox {
-	addrepokey
+	#addrepokey
 	install update
-	install virtualbox -y
+	vecho checking latest
+	l=`install search virtualbox | egrep '^virtualbox-[0-9]' | tail -1 | cut -d' ' -f1` 
+	vecho latest - $l
+	vecho installing $l
+	install $l -y
+	vecho installing Virtual box extension pack
+	install virtualbox-ext-pack -y
+	#install 
 }
 
 vecho Installing VirtualBox
 
-vecho Updating repo
+vecho Updating repo key
 
 addrepokey
+
+vecho Updating repo
+
+addrepo
 
 vecho Updating and Installing
 

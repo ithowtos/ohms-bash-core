@@ -3,4 +3,9 @@
 
 stuff=`readarg $*`
 
+if ismac; then echo $stuff | titlecase ; else
+
 echo $stuff | sed 's/.*/\L&/; s/[a-z]*/\u&/g'
+
+fi
+

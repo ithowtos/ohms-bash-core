@@ -3,13 +3,7 @@
 
 stuff=`readarg $1`
 
-#function use {
 intusage $0 octal_number $stuff || exit 1
 
-#checkinteger 
-
-#echo heeee
-
-#echo $stuff
-
 printf "\\`echo -ne ${stuff}`"
+

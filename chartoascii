@@ -1,6 +1,5 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-
-
 printf '%d' "'$1"
+

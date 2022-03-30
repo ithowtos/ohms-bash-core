@@ -1,17 +1,36 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-source=$1
+sourc=$1
 mountpoint=$2
+
+olog $0 ${FUNCNAME[*]} here
 
 usage $0 'source mount_point' $mountpoint || exit 1
 
-sc=$source
+sc=$sourc
 mp=$mountpoint
 
-function mntftp {
-	ohmsin curlftpfs $sc $mp
+fp=ftp
+hp=http
+
+function mnt {
+	mess="$0 ${FUNCNAME[*]} mounting of $p - $sc - $mp"
+	olog $mess
+	if [ "$p" = "$fp" ]; then
+		prog=curl${p}fs
+	elif [ "$p" = "$hp" ] ; then 
+		prog=${p}fs2 
+		errexit $0 ${FUNCNAME[*]} http mount not fully implemented yet || exit 1
+	fi
+	ohmsin $prog $sc $mp && \
+	olog $mess - successful || 
+		errexit "$mess unsuccessful" || exit 1
 }
 
-echo $sc | grep -o ftp && mntftp $sc $mp
+olog '################################################################'
+olog $0 ${FUNCNAME[*]} om
+
+p=`echo $sc | egrep -o "^(ftp|http)"` && mnt $sc $mp || \
+	errexit "$0 ${FUNCNAME[*]} Nothing to mount - $p - $sc - $mp" || exit 1
 

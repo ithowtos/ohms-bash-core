@@ -1,14 +1,15 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-st=$3
+pr="$1"
+st="$2"
 
-usage $0 '$0 [usage post script] [integer parameter to check]' $2 || exit 1
+usage $0 '$0 [integer parameter to check]' "$pr" || exit 1
 
 function use {
-	usage "$1" "$2" "$st" || exit 1
+	#olog "$1 - $2"
+	usage "$1" 'integer' "$2" || exit 1
 }
 
-use $1 $2 $st || exit 1
-st=
-checkinteger $3 || use $1 $2 $st || exit 1
+[  "$st" ] || $use "$pr" "$st" || exit 1 && \
+isinteger "$st" && exit 0 || use "$pr" '' || exit 1

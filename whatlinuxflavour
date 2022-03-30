@@ -1,6 +1,7 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-supported="ubuntu|xenial|bionic|trusty|alpine|centos|PRODUCT_VERSION=\"7\""
-for i in `cat /etc/*release | egrep -io ${supported}`;do echo $i | tolowercase ;done | sort | uniq
+supported="ubuntu|xenial|focal|bionic|trusty|alpine|centos|PRODUCT_VERSION=\"7\"|rocky"
+#for i in `cat /etc/*release | egrep -io ${supported}`;do echo $i | tolowercase ;done | sort -u
+cat /etc/*release | egrep -io ${supported} | sort -uf | tr '\n' ' ' | tolowercase
 

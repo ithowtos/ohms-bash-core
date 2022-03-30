@@ -4,7 +4,7 @@
 stuff=`readarg $1`
 
 function use {
-	usage $0 decimal_integer $st || exit 0
+	usage $0 hexadecimal $st || exit 0
 }
 
 function convert {

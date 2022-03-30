@@ -17,6 +17,7 @@ fi
 use
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
-	$( echo ${comm} | sed "s/this/$line/g" )
+	#echo line - $line
+	$( echo "${comm}" | sed "s|this|$line|g"  )
 done < "$file"
 

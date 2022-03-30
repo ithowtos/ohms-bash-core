@@ -1,4 +1,36 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-echo -ne `date +%Y%m%d%H%M%S`
+extra=${*}
+s='\-s'
+extr="$( echo $extra | sed "s|$s||g" | sed 's| $||g'   )"
+
+function _olog {
+	:
+	#olog $0 ${FUNCNAME[*]} ${*}
+}
+
+
+function _outp {
+	_olog 
+	ismac && echo ${*} || echo -ne ${*}
+}
+
+
+function _svstr {
+	_olog 
+	in=$( date "+%Y-%m-%d %H:%M:%S" ${extr} ) && _outp $in || exit 1
+}
+
+function _lstr {
+	_olog 
+	in="$( date "+%Y%m%d%H%M%S" ${extr} )" && _outp $in
+}
+
+
+_olog $extra
+_olog $extr
+_olog $s
+
+echo ${extra} | grep -q "$s" && _svstr || _lstr || exit 1
+

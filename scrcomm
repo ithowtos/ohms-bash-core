@@ -11,4 +11,7 @@ title=$1
 echo comm - $comm
 echo title - $title
 
+command -v screen > /dev/null || install screen
+`command -v screenexists` ${title} && scrcommadd ${title} ${comm} || \
 screen -dS "${title}" -m ${comm}
+
