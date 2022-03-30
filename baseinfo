@@ -1,0 +1,11 @@
+#!/bin/bash
+
+function _process {
+olog "Hostname: $HOSTNAME"
+olog "Date Time: `date`"
+olog "Linux Flavour: `showlinuxflavour`"
+
+}
+
+_process
+
