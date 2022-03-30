@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	ocommand lsof && exit 0 || install lsof -y && ocommand lsof || errexit "$0 can not" || exit 1
+}
+
+_process
+
