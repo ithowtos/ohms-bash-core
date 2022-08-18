@@ -1,0 +1,8 @@
+#!/bin/bash
+
+function _process {
+	tmux ls 2>/dev/null || exit 1
+}
+
+_process
+

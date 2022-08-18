@@ -1,0 +1,22 @@
+#!/bin/bash
+
+name=$1
+text=${@:2}
+
+usage $0 'name text-to-send' "$text" 'Send string to existing tmux' || errexit 'Bad input' || exit 1
+
+function _tmuxsend {
+	:
+	ent=
+	echo $text | egrep -iq ' Enter$' && ent=Enter && text=$( echo $text | sed 's|[eE]nter$||g' ) 
+	tmux send -t $name "${text}" Enter || errexit "$0 - unable - $name - $ext" || exit 1
+}
+
+function _process {
+	#olog $text
+	tmuxexists $name || errexit 'No such screen' || exit 1 && _tmuxsend || exit 1
+
+}
+
+_process || exit 1
+
