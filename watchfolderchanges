@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if ismac ; then
+	watchfolderchangesmac ${*} && exit 0 || exit 1
+fi
+
+fol="$1"
+outfile="$2"
+
+usage $0 'folder' "$fol" 'Watches a folder for any changes then lists changed files, and then exits' || exit 1
+
+function _checkins {
+	command -v inotifywait > /dev/null || install inotify-tools -y
+}
+
+function _inculimit {
+	amiroot && increaseinotifymaxuserwatches
+}
+
+function _process {
+	[ "$outfile" ] && outf=" >> ${outfile}"
+	_checkins && \
+	_inculimit
+	inotifywait --format %w%f --exclude '(4913|~$)'  -q -r "$fol" 
+}
+
+_process
+
