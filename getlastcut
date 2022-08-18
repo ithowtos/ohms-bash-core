@@ -1,0 +1,13 @@
+#!/bin/bash
+
+del=$1
+rest=${@:2}
+
+usage $0 'delimiter string' "$rest" 'Gets last item cut from delimiter supplied' || errexit 'No item supplied' || exit 1
+
+function _process {
+	echo $rest | rev | cut -d "$del" -f1 | rev
+}
+
+_process
+

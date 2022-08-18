@@ -1,0 +1,29 @@
+#!/bin/bash
+# Version - 1.0.0 - rc
+
+pd='Program to daemonise the program passed in,\nand place the daemon into a screen, then detach,\nand use the the first word of the command as the screen title.'
+
+stuff=`readarg "${*}"`
+stuffa=( `echo ${stuff}` )
+scr=${stuffa[0]}
+co=${stuffa[1]}
+pars=${stuffa[*]:2}
+com=`command -v $co`
+
+#olog $0 screen - $scr - co - $co - com - $com - pars - $pars
+
+bf='command not found'
+
+usage $0 'screen-name command to daemon' "${com}" "${pd}" || errexit "$co $bf" || exit 1
+
+stuff="$com $pars"
+
+comm="while true ; do ${stuff} ; done "
+#scrcommadd ${scr} ${comm} # formerly used screen now use tmux
+olog comm - $comm
+olog scr - $scr
+tmuxexists ${scr}  && tmux new-window -t ${scr} 
+tmuxcomm ${scr} ${comm} || errexit "$0 - unable - $scr - $stuff - daemon" || exit 1
+
+
+
