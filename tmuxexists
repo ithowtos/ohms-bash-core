@@ -1,0 +1,16 @@
+#!/bin/bash
+
+name=$1
+
+usage $0 'name' "$name" 'Checks if the tmux session exists' || errexit 'No name given' || exit 1
+
+function _process {
+	#olog $0 start
+	ocommand tmux || oin tmux -V 2> /dev/null || \
+	errexit "$0 - no tmux!" || exit 1 && \
+	otmuxls | cut -d: -f1 | grep -io $name || exit 1
+	#olog $0 end
+}
+
+_process
+

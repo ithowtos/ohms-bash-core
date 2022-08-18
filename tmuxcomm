@@ -1,0 +1,44 @@
+#!/bin/bash
+
+res=0
+re=' -r'
+regexcheck "${re}" "${*}" && res=1 && olog 'restart requested'
+stuff=( `echo ${*} | sed 's|-r||g'` )
+
+name=${stuff[0]}
+comm=${stuff[@]:1}
+
+[[ "$res" -eq "1" ]] && olog "restarting - $name" && killtmux $name 
+
+olog pars - ${*}
+olog stuff - ${stuff}
+
+olog name - $name
+olog comm - $comm
+
+usage $0 'name command params' "$name" '' || errexit 'No name given' || exit 1
+
+function _olog {
+	:
+	olog ${FUNCNAME[*]} ${*}
+}
+
+function _tmuxdetach {
+	tmux new -d -s $name || errexit "$0 - unable - $name - $comm" || exit 1
+}
+
+function _checkapp {
+	ocommand $co || errexit "$0 no such app" || exit 1
+}
+
+function _process {
+	co=`echo $comm | cut -d' ' -f1` &&\
+	_checkapp || exit 1 &&\
+	tmuxexists $name || _tmuxdetach || exit 1
+	[ "$comm" ] && tmuxsendreturn $name "${comm}" || exit 1
+	
+
+}
+
+_process || exit 1
+
