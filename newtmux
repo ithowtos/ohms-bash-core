@@ -1,0 +1,16 @@
+#!/bin/bash
+
+name=$1
+
+usage $0 'name' "$name" 'Creates a new tmux session' || errexit 'No name given' || exit 1
+
+function _newtmux {
+	tmux new -s $name || "$0 - unable - $name" || exit 1
+}
+
+function _process {
+	tmuxexists $name || _newtmux || exit 1
+}
+
+_process || exit 1
+

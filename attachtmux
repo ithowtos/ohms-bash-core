@@ -1,0 +1,16 @@
+#!/bin/bash
+
+name=$1
+
+usage $0 'name' "$name" 'Attaches to the tmux session if it exists' || errexit 'No name given' || exit 1
+
+function _tmuxattach {
+	tmux a -t $name || errexit "$0 - $name - unable" || exit 1
+}
+
+function _process {
+	tmuxexists $name && _tmuxattach || exit 1
+}
+
+_process || exit 1
+
