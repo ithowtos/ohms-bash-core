@@ -1,0 +1,14 @@
+#!/bin/bash
+
+name=$1
+comm=${@:2}
+
+usage $0 'name command' "$name" 'Attaches to the tmux session or creates the new tmux' || errexit 'No name given' || exit 1
+
+function _process {
+	[ "$comm" ] && tmuxcomm omer $comm 
+	attachtmux $name || newtmux $name || errexit "$0 - unable - $name" || exit 1
+}
+
+_process || exit 1
+

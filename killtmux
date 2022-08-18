@@ -1,0 +1,16 @@
+#!/bin/bash
+
+name=$1
+
+usage $0 'name' "$name" 'Kills the tmux session if it exists' || errexit 'No name given' || exit 1
+
+function _killtmux {
+	tmux kill-session -t $na || errexit "$0 - unable - $name" || exit 1
+}
+
+function _process {
+	na=$( tmuxexists $name ) || errexit "$name - No such tmux session" || exit 0 && _killtmux || exit 1
+}
+
+_process || exit 1
+
