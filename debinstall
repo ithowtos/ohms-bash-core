@@ -14,6 +14,7 @@ function _process {
 	os=`showlinuxflavour`
 	update=update
 	upgrade=upgrade
+	brew=brew
 	debub=`isdebrpm | grep $deb` || errexit "$0 - Only works $deb based Linux" || exit 1
 	olog $0
 	#### Update ####
@@ -56,12 +57,26 @@ function _process {
 	elif [ ${debub} ] && [ "$1" = "notify-send" ]; then 
 		olog "$os $debub - ${inst}ing notify-send (libnotify-bin)"
 		${inst} libnotify-bin -y && exit 0 || exit 1
+	elif [ ${debub} ] && [ "$1" = "openvpnas" ]; then
+		olog "$os $debub - ${inst}ing $1"
+		${inst}${1}${deb} || exit 1
+	elif [ ${debub} ] && [ "$1" = "$brew" ] ; then
+		olog ${inst}ing $brew
+	elif [ ${debub} ] && [ "$1" = "gvim" ] ; then
+		pro=vim-gtk3
+		olog ${inst}ing $pro
+		$inst $pro -y
 	##### Catch all ${inst} specific package #####
 	elif [ ${debub} ]; then
 		olog $os $debub repo package ${inst}ing -  $1 &&\
 		_packinst "${@}" && exit 0 ||\
-		_packinst "${@}" 2>&1 | grep -qo 'Try "snap install' &&\
-			snap${inst} "${@}" || exit 1
+		olog "$brew install? yN"
+		read -s -n1 -t2 ans
+		echo $ans | egrep -i '^y'  && ${inst} $brew &&\
+			$brew $inst ${@} || errexit "$0 baddness happened" || exit 1
+
+#		_packinst "${@}" 2>&1 | grep -qo 'Try "snap install' &&\
+#			snap${inst} "${@}" || exit 1
 	##### Fail if unknown ####
 	else 
 		errexit "$0 - $os - unknown action - ${*}" || exit 1

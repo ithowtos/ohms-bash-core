@@ -7,4 +7,4 @@ if [ -z "$thing" ];then
 	read thing
 fi
 
-echo ${thing} | tr [:lower:] [:upper:]
+echo ${thing} | tr '[[:lower:]]' '[[:upper:]]'

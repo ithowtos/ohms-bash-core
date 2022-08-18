@@ -15,9 +15,11 @@ function _osinst {
 function _process {
 	olog $0
 	ty=`isdebrpm`
-	if [ "$1" = "docker" ] ; then installdocker 
-	elif [ "$1" = "veracrypt" ] ; then installveracrypt 
-	elif [ "$1" = "dbeaver" ] ; then installdbeaver
+	exceptions=( docker veracrypt brew dbeaver chrome opera )
+	exc=$( echo ${exceptions[*]} | tr ' ' '|' )
+	if regexcheck "^($exc)$" "$1" ; then 
+		olog $0 $1
+		install$1
 	elif regexcheck "(kvm|qemu|virt)" $1 ; then
 		installkvm
 	elif regexcheck "mac|rpm|deb" "$ty" ; then _osinst ${*}

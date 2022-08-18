@@ -1,5 +1,4 @@
 #!/bin/bash
-# Version - 1.0.0 - rc
 # Requires - sshfs
 
 #sshfs -V | grep -o version > /dev/null && echo yes || install sshfs -y
@@ -10,6 +9,15 @@ osudo usermod -a -G fuse $USER
 function sshfsf {
 	mkdir -p $dest
 	sshfs -o allow_other $src $dest
+}
+
+function checkhome {
+	olog $0 checking if home
+	stu=`echo $src | cut -d: -f1 | totitlecase`
+	#olog stu - $stu
+	ff=`echo $src | cut -d: -f2-`
+	getwakedevs | grep -io $stu || \
+		return && amiathome && echo "$0 at home" || errexit "$0 not at home" || src="${stu}:${ff}"
 }
 
 
@@ -27,8 +35,10 @@ if [ -z "$dest" ] ; then
 	fin=`echo $src | cut -d':' -f1 `
 	echo fin - $fin 
 
-	dest="/home/${USER}/Drives/omnt/${fin}"
+	dest="`getomnt`${fin}"
 fi
+
+checkhome
 
 echo $src - $dest
 

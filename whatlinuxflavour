@@ -1,7 +1,9 @@
 #!/bin/bash
 # Version - 1.0.0 - rc
 
-supported="ubuntu|xenial|focal|bionic|trusty|alpine|centos|PRODUCT_VERSION=\"7\"|rocky"
+ismac && echo mac && exit 0
+
+supported="ubuntu|xenial|focal|bionic|trusty|alpine|oracle|centos|PRODUCT_VERSION=\"7\"|rocky|debian|buster|bullseye"
 #for i in `cat /etc/*release | egrep -io ${supported}`;do echo $i | tolowercase ;done | sort -u
 cat /etc/*release | egrep -io ${supported} | sort -uf | tr '\n' ' ' | tolowercase
 

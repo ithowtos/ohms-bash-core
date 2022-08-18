@@ -5,6 +5,7 @@ prog=$1
 usage $0 'program' "$prog" || exit 1
 
 function _process {
+	ismac && [ -e /Applications/${prog}* ] && exit 0 ||\
 	command -v $prog > /dev/null || exit 1
 }
 

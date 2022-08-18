@@ -1,5 +1,16 @@
 #!/bin/bash
-osudo add-apt-repository ppa:yannubuntu/boot-repair
-osudo apt-get update
-osudo apt-get install -y boot-repair
-osudo boot-repair
+
+function _install {
+	command -v boot-repair && return || \
+	install ppa:yannubuntu/boot-repair -y
+	install update
+	install boot-repair -y
+}
+
+function _process {
+	_install && \
+	boot-repair
+}
+
+_process
+

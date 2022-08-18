@@ -3,7 +3,9 @@
 # Version - 1.0.0 - rc
 
 function all {
-	dropbox status > /dev/null || install https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
+	dropbox status > /dev/null || errexit "$0 - need to install dropbox separately" || exit 1
+		#installdropboxheadless
+		#install https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
 }
 
 function restart {
@@ -17,7 +19,12 @@ if [ "restart" = "$1" ] ; then
 	restart
 elif [ "status" = "$1" ] ;then
 	echo The Dropbox status is...
-	dropbox status
+	ou=`dropbox status` 
+	o=`echo $ou | grep  "isn't"`
+	if [ "$o" ] ; then errexit $o || exit 1 ; 
+	else 
+		olog $ou
+	fi 
 else 
 	dropbox "${*}"
 fi
