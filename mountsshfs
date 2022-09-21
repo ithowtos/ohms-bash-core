@@ -11,16 +11,6 @@ function sshfsf {
 	sshfs -o allow_other $src $dest
 }
 
-function checkhome {
-	olog $0 checking if home
-	stu=`echo $src | cut -d: -f1 | totitlecase`
-	#olog stu - $stu
-	ff=`echo $src | cut -d: -f2-`
-	getwakedevs | grep -io $stu || \
-		return && amiathome && echo "$0 at home" || errexit "$0 not at home" || src="${stu}:${ff}"
-}
-
-
 sshfsex="`command -v sshfs`"
 
 if [ -z "$sshfsex" ];  then
@@ -37,8 +27,6 @@ if [ -z "$dest" ] ; then
 
 	dest="`getomnt`${fin}"
 fi
-
-checkhome
 
 echo $src - $dest
 
